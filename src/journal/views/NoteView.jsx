@@ -1,8 +1,31 @@
 import { SaveOutlined } from "@mui/icons-material";
 import { Button, Grid2 as Grid, TextField, Typography } from "@mui/material";
 import ImageGallery from "../../auth/components/ImageGallery";
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useMemo } from "react";
+import { useForm } from "../../hooks/useForm"
+import { setActiveNote } from "../../store/journal/journalSlice";
 
 const NoteView = () => {
+
+  const dispatch = useDispatch();
+  const { active: note } = useSelector((state) => state.journal)
+
+  const { body, title, date, onInputChange, formState } = useForm( note )
+
+  const dateString = useMemo (() => {
+    const newDate = new Date(date).toUTCString();
+    return newDate;
+  }, [note.date])
+
+  useEffect(()=>{
+    dispatch(setActiveNote( formState ))
+  }, [formState])
+
+  const onSaveNote = () => {
+    dispatch()
+  }
+
   return (
     <>
       <Grid
@@ -14,11 +37,12 @@ const NoteView = () => {
         sx={{ mb: 1 }}
       >
         <Grid>
-          <Typography> 13 de diciembre, 2024</Typography>
+          <Typography>{ dateString }</Typography>
         </Grid>
 
         <Grid>
-          <Button color="primary" sx={{ padding: 2 }}>
+          <Button color="primary" sx={{ padding: 2 }}
+            onClick={ onSaveNote }>
             <SaveOutlined sx={{ fontSize: 25, mr: 1 }}></SaveOutlined>
             Guardar
           </Button>
@@ -31,6 +55,9 @@ const NoteView = () => {
           fullWidth
           placeholder="Ingrese un título"
           label="Título"
+          name="title"
+          value={title}
+          onChange={onInputChange}
         />
         <TextField
           type="text"
@@ -40,6 +67,9 @@ const NoteView = () => {
           placeholder="¿Qué sucedió en el día de hoy?"
           sx={{ mt: 2, width: "100%" }}
           minRows={5}
+          name="body"
+          value={body}
+          onChange={onInputChange}
         />
       </Grid>
 

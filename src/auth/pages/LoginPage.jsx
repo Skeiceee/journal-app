@@ -19,8 +19,8 @@ import AlertForm from "../components/AlertForm";
 
 
 const formData = {
-    email: 'victoralejandronunezt@gmail.com',
-    password: '123456'
+    email: '',
+    password: ''
 }
 
 const formValidations = {
