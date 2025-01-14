@@ -1,4 +1,4 @@
-import { DeleteOutline, SaveOutlined, UploadFileOutlined, UploadOutlined } from "@mui/icons-material";
+import { DeleteOutline, SaveOutlined, UploadOutlined } from "@mui/icons-material";
 import { Button, Grid2 as Grid, IconButton, TextField, Typography } from "@mui/material";
 import ImageGallery from "../../auth/components/ImageGallery";
 import { useDispatch, useSelector } from "react-redux"
